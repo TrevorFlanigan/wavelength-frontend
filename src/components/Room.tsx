@@ -2,56 +2,92 @@ import React, { CSSProperties, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import RoomData from "../types/RoomData";
 import toTitleCase from "../utils/toTitleCase";
+import PlayArea from "./PlayArea";
+import PolarCards from "./PolarCards";
 import socket from "./Socket";
+import "../styles/Modals.css";
+import GameProps from "../types/GameProps";
 
-type RoomProps = {
-  location: any;
-  match?: any;
-};
+// type RoomProps = {
+//   roomName: string;
+//   data: RoomData;
+//   currTeam: "left" | "right";
+//   isPsychic: boolean;
+//   currPsychic: string;
+// };
 
 const scoreStyle: CSSProperties = {
   flex: "1 1 300px",
   textAlign: "center",
   color: "white",
 };
+const Modals = {
+  NAME: "name",
+  NONE: "",
+};
 
-const Room = (props: RoomProps) => {
-  //make call to join / create the room
+const Room = (props: GameProps) => {
   const history = useHistory();
-  let goal: number | undefined;
-  let setGoal: React.Dispatch<React.SetStateAction<number | undefined>>;
-  let [redScore, setRedScore] = useState(0);
+  let [orangeScore, setOrangeScore] = useState(0);
   let [blueScore, setBlueScore] = useState(0);
-  let [leftWord, setLeftWord] = useState("");
-  let [rightWord, setRightWord] = useState("");
-  [goal, setGoal] = useState();
+  const roomName = props.roomName;
 
-  const roomName = props.match.params.room;
-  useEffect(() => {
-    const setData = (data: RoomData) => {
-      setLeftWord(data.leftWord);
-      setRightWord(data.rightWord);
-      setGoal(data.goal);
-    };
-    socket.on("generated", (data: RoomData) => {
-      setData(data);
-    });
-
-    socket.emit("joinroom", roomName, (data: RoomData) => {
-      setData(data);
-    });
-  }, [roomName, setGoal]);
-
-  const handleSetup = () => {
-    socket.emit("generategame", roomName);
+  const renderNames = (names: string[]) => {
+    return (
+      <ul style={{ listStyleType: "none", padding: 0 }}>
+        {names.map((name) => (
+          <li style={{ fontWeight: "bold" }}>{name}</li>
+        ))}
+      </ul>
+    );
   };
+
+  const { leftTeam, rightTeam } = props;
   return (
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
-      <h1 style={{ textAlign: "center" }}>
-        Room Name: {props.match.params.room}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>Room Name: {roomName}</h1>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            display: "flex",
+            flex: "1 1 40%",
+            textAlign: "center",
+            flexDirection: "column",
+          }}
+        >
+          <h2>Team 1</h2>
+          {renderNames(leftTeam)}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            placeItems: "center",
+            justifyContent: "center",
+            flex: "0 1 10%",
+          }}
+        >
+          <h1
+            style={{
+              textAlign: "center",
+            }}
+          >
+            VS
+          </h1>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flex: "1 1 40%",
+            textAlign: "center",
+            flexDirection: "column",
+          }}
+        >
+          <h2>Team 2</h2>
+          {renderNames(rightTeam)}
+        </div>
+      </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
           style={{
@@ -60,26 +96,16 @@ const Room = (props: RoomProps) => {
             justifyContent: "space-around",
           }}
         >
-          <h1 style={{ backgroundColor: "red", ...scoreStyle }}>{redScore}</h1>
-          <h1 style={{ backgroundColor: "blue", ...scoreStyle }}>
+          <h1 style={{ backgroundColor: "#FFA97E", ...scoreStyle }}>
+            {orangeScore}
+          </h1>
+          <h1 style={{ backgroundColor: "#7ED6FF", ...scoreStyle }}>
             {blueScore}
           </h1>
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          flexGrow: 1,
-        }}
-      >
-        Main play area
-        <button onClick={handleSetup}>Get Words</button>
-        <div>
-          <h2>{toTitleCase(leftWord)}</h2>
-          <h2>{toTitleCase(rightWord)}</h2>
-        </div>
-      </div>
+
+      <PlayArea {...props} />
     </div>
   );
 };
