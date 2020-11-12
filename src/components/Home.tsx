@@ -1,18 +1,69 @@
-import React from "react";
+import { WinState } from "./RoomHandler";
+import React, { CSSProperties, useState } from "react";
+import { useHistory } from "react-router-dom";
+import RoomData from "../types/RoomData";
 import socket from "./Socket";
-type HomeProps = {};
+import bg from "../assets/wavelength.gif";
 
-const Home = (props: HomeProps) => {
+const Home = () => {
+  let [value, setValue] = useState("");
+  let history = useHistory();
   return (
-    <div>
-      <button
-        onClick={() => {
-          console.log("hi");
-          socket.emit("message", "hi");
+    <div
+      style={{
+        backgroundImage: `url(${bg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <h1
+        style={{
+          marginTop: 0,
+          paddingTop: 20,
+          textAlign: "center",
+          color: "#fff",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
         }}
       >
-        Hello
-      </button>
+        WAVELENGTH
+      </h1>
+      <div style={{ display: "flex", flexDirection: "row", margin: "20px" }}>
+        <div
+          style={{
+            display: "flex",
+            flex: "1 1 40%",
+            textAlign: "center",
+            flexDirection: "column",
+            // justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <input
+            placeholder="Room Name"
+            type="text"
+            name="roomname"
+            style={{ textAlign: "center" }}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <label htmlFor="roomname" style={{ margin: 20, color: "white" }}>
+            Create or Join a Room
+          </label>
+          <button onClick={() => history.push(`/${value}`)}> Start </button>
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flex: "1 1 300px",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          flexDirection: "column",
+        }}
+      ></div>
     </div>
   );
 };

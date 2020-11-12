@@ -41,7 +41,7 @@ const RoomHandler = (props: RoomHandlerProps) => {
   let [value, setValue] = useState(50);
   let [winner, setWinner] = useState("neither" as WinState);
 
-  const roomName = props.match.params.room;
+  const roomName = props.match.params.room.toLowerCase();
 
   const submit = (
     e:
