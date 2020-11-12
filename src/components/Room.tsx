@@ -62,6 +62,8 @@ const Room = (props: GameProps & { leftScore: number; rightScore: number }) => {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
+        height: "100vh",
+        width: "100vw",
         backgroundSize: "cover",
       }}
     >

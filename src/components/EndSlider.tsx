@@ -11,20 +11,25 @@ const EndSlider = (props: TargetProps) => {
         position: "relative",
         WebkitAppearance: "none",
         width: "calc(100% - 10px)",
-        height: "152px",
+        maxHeight: "100px",
+        minHeight: "50px",
+        height: "10vh",
         background: "#f5f6fa",
         borderRadius: "5px",
         marginTop: "20px",
         marginBottom: "20px",
         outline: "none",
       }}
+      className="slider-container"
     >
       <div
         style={{
           backgroundImage: `url(${target})`,
           opacity: props.bg,
           transition: "opacity 1s",
-          height: "100%",
+          maxHeight: "100px",
+          minHeight: "50px",
+          height: "10vh",
           backgroundSize: "100%",
           backgroundRepeat: "repeat-y",
           transform: `translateX(${props.goal - 50}vw)`,
@@ -39,6 +44,7 @@ const EndSlider = (props: TargetProps) => {
         step={0.00001}
         value={props.value}
         style={{
+          height: "calc(10vh - 2px)",
           position: "absolute",
           bottom: 0,
           border: "1px solid black",

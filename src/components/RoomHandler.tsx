@@ -228,7 +228,7 @@ const RoomHandler = (props: RoomHandlerProps) => {
   }
 
   return (
-    <div>
+    <div style={{ maxHeight: "100vh", maxWidth: "100vw", overflowX: "hidden" }}>
       {/* Modal */}
       {notJoined ? (
         <div className="backdrop" style={{ opacity: opacity }}>

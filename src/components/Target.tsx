@@ -5,13 +5,15 @@ type TargetProps = { goal: number; value: number };
 const Target = (props: TargetProps) => {
   return (
     <div
-      // className="slider"
+      // className="slider-container"
       style={{
         overflow: "hidden",
         position: "relative",
         WebkitAppearance: "none",
         width: "calc(100% - 10px)",
-        height: "154px",
+        maxHeight: "100px",
+        minHeight: "50px",
+        height: "10vh",
         background: "#f5f6fa",
         borderRadius: "5px",
         marginTop: "20px",
@@ -24,7 +26,9 @@ const Target = (props: TargetProps) => {
       <div
         style={{
           backgroundImage: `url(${target})`,
-          height: "100%",
+          maxHeight: "100px",
+          minHeight: "50px",
+          height: "10vh",
           backgroundSize: "100%",
           backgroundRepeat: "repeat-y",
           transform: `translateX(${props.goal - 50}vw)`,

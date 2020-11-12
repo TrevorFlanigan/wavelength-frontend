@@ -37,6 +37,7 @@ const Slider = (props: SliderProps) => {
         alignItems: "center",
         margin: "20px",
       }}
+      className="slider-container"
     >
       <input
         className="slider"

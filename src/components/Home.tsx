@@ -41,18 +41,27 @@ const Home = () => {
             alignItems: "center",
           }}
         >
-          <input
-            placeholder="Room Name"
-            type="text"
-            name="roomname"
-            style={{ textAlign: "center" }}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <label htmlFor="roomname" style={{ margin: 20, color: "white" }}>
-            Create or Join a Room
-          </label>
-          <button onClick={() => history.push(`/${value}`)}> Start </button>
+          <form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+            onSubmit={() => history.push(`/${value}`)}
+          >
+            <input
+              placeholder="Room Name"
+              type="text"
+              name="roomname"
+              style={{ textAlign: "center" }}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <label htmlFor="roomname" style={{ margin: 20, color: "white" }}>
+              Create or Join a Room
+            </label>
+            <button onClick={() => history.push(`/${value}`)}> Start </button>
+          </form>
         </div>
       </div>
       <div
