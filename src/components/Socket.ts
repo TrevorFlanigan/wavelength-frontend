@@ -1,5 +1,6 @@
 import io from "socket.io-client";
 
-let socket = io("http://localhost:4000", { transports: ["websocket"] });
+/**TODO fix this for local dev */
+let socket = io();
 
 export default socket;
