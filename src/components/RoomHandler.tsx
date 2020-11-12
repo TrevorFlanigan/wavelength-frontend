@@ -40,7 +40,7 @@ const RoomHandler = (props: RoomHandlerProps) => {
   let [end, setEnd] = useState(false);
   let [value, setValue] = useState(50);
   let [winner, setWinner] = useState("neither" as WinState);
-
+  let [lockedIn, setLockedIn] = useState(false);
   const roomName = props.match.params.room.toLowerCase();
 
   const submit = (
@@ -92,16 +92,19 @@ const RoomHandler = (props: RoomHandlerProps) => {
     switch (gameState) {
       case GameState["TEAM1_END"]:
       case GameState["TEAM2_END"]:
+        setLockedIn(true);
         setEnd(true);
         setSteal(false);
         break;
       case GameState["TEAM1_GUESS"]:
       case GameState["TEAM2_GUESS"]:
+        setLockedIn(false);
         setEnd(false);
         setSteal(false);
         break;
       case GameState["TEAM1_STEAL"]:
       case GameState["TEAM2_STEAL"]:
+        setLockedIn(true);
         setEnd(false);
         setSteal(true);
     }
@@ -198,6 +201,7 @@ const RoomHandler = (props: RoomHandlerProps) => {
     steal: steal,
     end: end,
     value: value,
+    lockedIn: lockedIn,
   };
 
   let data: RoomData = {

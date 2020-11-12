@@ -13,6 +13,7 @@ type GameProps = {
   steal: boolean;
   value: number;
   end: boolean;
+  lockedIn: boolean;
 };
 
 export default GameProps;

@@ -19,7 +19,7 @@ const PsychicPlayArea = (props: GameProps) => {
       <p style={{ margin: 0 }}>
         You're the <strong>PSYCHIC</strong>
       </p>
-      <Target goal={goal} value={value} />
+      <Target goal={goal} value={value} lockedIn={props.lockedIn} />
     </div>
   );
 };

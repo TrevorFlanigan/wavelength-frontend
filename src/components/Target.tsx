@@ -1,6 +1,6 @@
 import React from "react";
 import target from "../assets/target.svg";
-type TargetProps = { goal: number; value: number };
+type TargetProps = { goal: number; value: number; lockedIn: boolean };
 
 const Target = (props: TargetProps) => {
   return (
@@ -36,7 +36,7 @@ const Target = (props: TargetProps) => {
         }}
       ></div>
       <input
-        className="slider"
+        className={`slider ${props.lockedIn && "lockedin"}`}
         type="range"
         min="0"
         max="100"

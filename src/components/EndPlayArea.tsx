@@ -37,7 +37,7 @@ const EndPlayArea = (props: GameProps) => {
     >
       <h2 style={{ margin: 0 }}>{props.currPsychic} is up!</h2>
       <PolarCards leftWord={leftWord} rightWord={rightWord} />
-      <EndSlider value={value} goal={goal} bg={bg} />
+      <EndSlider value={value} goal={goal} bg={bg} lockedIn={props.lockedIn} />
       {showNext ? (
         <button
           style={{ backgroundColor: "#7effa9", color: "#000", width: "40%" }}

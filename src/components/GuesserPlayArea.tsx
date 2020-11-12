@@ -24,6 +24,7 @@ const GuesserPlayArea = (props: GameProps) => {
         It's your team's turn to <strong>GUESS</strong>
       </p>
       <Slider
+        lockedIn={props.lockedIn}
         roomName={props.roomName}
         role="guesser"
         value={value}

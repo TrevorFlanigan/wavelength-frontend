@@ -25,6 +25,7 @@ const StealerPlayArea = (props: GameProps) => {
         It's your team's turn to <strong>STEAL</strong>
       </p>
       <Slider
+        lockedIn={props.lockedIn}
         steal={props.steal}
         value={value}
         roomName={props.roomName}

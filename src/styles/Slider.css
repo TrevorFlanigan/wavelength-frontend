@@ -46,3 +46,13 @@
   margin-bottom: "20px";
   outline: "none";
 }
+
+.lockedin::-webkit-slider-thumb {
+  transition: background-color 0.1s;
+  background-color: darkred !important;
+}
+
+.lockedin::-moz-range-thumb {
+  transition: background-color 0.1s;
+  background-color: darkred !important;
+}

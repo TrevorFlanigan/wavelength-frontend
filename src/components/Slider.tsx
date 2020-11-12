@@ -8,6 +8,7 @@ type SliderProps = {
   roomName: string;
   value: number;
   steal: boolean;
+  lockedIn: boolean;
 };
 
 const Slider = (props: SliderProps) => {
@@ -40,7 +41,7 @@ const Slider = (props: SliderProps) => {
       className="slider-container"
     >
       <input
-        className="slider"
+        className={`slider ${props.lockedIn && "lockedin"}`}
         type="range"
         min="0"
         max="100"

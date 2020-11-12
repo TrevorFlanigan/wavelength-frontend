@@ -1,7 +1,12 @@
 import React from "react";
 import target from "../assets/target.svg";
 import "../styles/Spinner.css";
-type TargetProps = { goal: number; value: number; bg: number };
+type TargetProps = {
+  goal: number;
+  value: number;
+  bg: number;
+  lockedIn: boolean;
+};
 
 const EndSlider = (props: TargetProps) => {
   return (
@@ -37,7 +42,7 @@ const EndSlider = (props: TargetProps) => {
         }}
       ></div>
       <input
-        className="slider"
+        className={`slider ${props.lockedIn && "lockedin"}`}
         type="range"
         min="0"
         max="100"
