@@ -8,6 +8,7 @@ type RoomData = {
   gameState: GameState;
   leftTeam: string[];
   rightTeam: string[];
+  currPsychic: string;
 };
 
 export default RoomData;

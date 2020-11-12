@@ -7,6 +7,7 @@ import Room from "./Room";
 import socket from "./Socket";
 import "../styles/Modals.css";
 import GameProps from "../types/GameProps";
+import GuesserPlayArea from "./GuesserPlayArea";
 type RoomHandlerProps = {
   match: any;
 };
@@ -49,13 +50,13 @@ const RoomHandler = (props: RoomHandlerProps) => {
       setGameState(data.gameState);
       setUserList(data.userList);
       setLeftTeam(data.leftTeam);
+      setCurrPsychic(data.currPsychic);
       console.log(data);
     };
 
     socket.emit("joinroom", roomName, name, (data: RoomData, team: Team) => {
       setData(data);
       setCurrTeam(team);
-      console.log(data);
     });
   };
 
@@ -70,10 +71,6 @@ const RoomHandler = (props: RoomHandlerProps) => {
       }
     );
   };
-
-  //   const handleSetup = () => {
-  //     socket.emit("generategame", roomName);
-  //   };
 
   const startGame = () => {
     socket.emit("startgame", roomName);
@@ -103,11 +100,10 @@ const RoomHandler = (props: RoomHandlerProps) => {
     });
     socket.on("youarepsychic", () => {
       setIsPsychic(true);
-      console.log("I am the psychic");
     });
     socket.on("psychicchosen", (left: boolean, name: string) => {
-      setCurrPsychic(name);
       setLeftTurn(left);
+      setCurrPsychic(name);
     });
   }, [roomName, setGoal]);
 
@@ -123,6 +119,7 @@ const RoomHandler = (props: RoomHandlerProps) => {
     rightTeam: rightTeam,
     leftTeam: leftTeam,
     roomName: roomName,
+    leftTurn: leftTurn,
   };
 
   let data: RoomData = {

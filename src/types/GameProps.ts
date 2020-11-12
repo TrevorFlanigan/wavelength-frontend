@@ -9,6 +9,7 @@ type GameProps = {
   userList: string[];
   leftTeam: string[];
   rightTeam: string[];
+  leftTurn: boolean;
 };
 
 export default GameProps;

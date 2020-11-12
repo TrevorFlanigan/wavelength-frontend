@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GameProps from "../types/GameProps";
 import PolarCards from "./PolarCards";
-import Slider from "./Slider";
+import socket from "./Socket";
 import Target from "./Target";
 
-const PlayArea = (props: GameProps) => {
+const PsychicPlayArea = (props: GameProps) => {
   const { goal, leftWord, rightWord } = props;
+
+  let [value, setValue] = useState(50);
+  useEffect(() => {
+    socket.on("valuechanged", (value: number) => {
+      setValue(value);
+    });
+  }, []);
+
   return (
     <div
       style={{
@@ -16,14 +24,12 @@ const PlayArea = (props: GameProps) => {
     >
       <h2 style={{ margin: 0 }}>{props.currPsychic} is up!</h2>
       <PolarCards leftWord={leftWord} rightWord={rightWord} />
-      {/* <Slider role="guesser" /> */}
-      <button
-        style={{ backgroundColor: "#7effa9", color: "#000", width: "40%" }}
-      >
-        Guess
-      </button>
+      <p style={{ margin: 0 }}>
+        You're the <strong>PSYCHIC</strong>
+      </p>
+      <Target goal={goal} value={value} />
     </div>
   );
 };
 
-export default PlayArea;
+export default PsychicPlayArea;

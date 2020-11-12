@@ -7,6 +7,11 @@ import PolarCards from "./PolarCards";
 import socket from "./Socket";
 import "../styles/Modals.css";
 import GameProps from "../types/GameProps";
+import PsychicPlayArea from "./PsychicPlayArea";
+import GuesserPlayArea from "./GuesserPlayArea";
+import StealerPlayArea from "./StealerPlayArea";
+import wavelength from "../assets/wavelength.jpg";
+import wavegif from "../assets/wavelength.gif";
 
 // type RoomProps = {
 //   roomName: string;
@@ -43,11 +48,35 @@ const Room = (props: GameProps) => {
   };
 
   const { leftTeam, rightTeam } = props;
+  const guessing = props.currTeam === (props.leftTurn ? "left" : "right");
+
+  const renderPlayArea = () => {
+    if (props.isPsychic) return <PsychicPlayArea {...props} />;
+    if (guessing) return <GuesserPlayArea {...props} />;
+    else return <StealerPlayArea {...props} />;
+  };
+
   return (
     <div
-      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        backgroundSize: "cover",
+      }}
     >
-      <h1 style={{ textAlign: "center" }}>Room Name: {roomName}</h1>
+      <h1
+        style={{
+          textAlign: "center",
+          color: "#000",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        WAVELENGTH
+      </h1>
+      {/* <h1 style={{ textAlign: "center" }}>Room Name: {roomName}</h1> */}
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
           style={{
@@ -105,7 +134,7 @@ const Room = (props: GameProps) => {
         </div>
       </div>
 
-      <PlayArea {...props} />
+      {renderPlayArea()}
     </div>
   );
 };

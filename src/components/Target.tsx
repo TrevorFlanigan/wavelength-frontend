@@ -1,55 +1,63 @@
 import React from "react";
 import target from "../assets/target.svg";
-type TargetProps = { goal: number };
+type TargetProps = { goal: number; value: number };
 
 const Target = (props: TargetProps) => {
   return (
-    <div className="slider">
+    <div
+      // className="slider"
+      style={{
+        overflow: "hidden",
+        position: "relative",
+        WebkitAppearance: "none",
+        width: "calc(100% - 10px)",
+        height: "154px",
+        background: "#f5f6fa",
+        borderRadius: "5px",
+        marginTop: "20px",
+        marginBottom: "20px",
+        // border: "1px solid grey",
+        // boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        outline: "none",
+      }}
+    >
       <div
         style={{
           backgroundImage: `url(${target})`,
           height: "100%",
           backgroundSize: "100%",
           backgroundRepeat: "repeat-y",
-          transform: `translateX(${props.goal - 50}vh)`,
+          transform: `translateX(${props.goal - 50}vw)`,
+          border: "none",
         }}
-      >
-        {/* <div
-          style={{
-            width: "20%",
-            height: "100%",
-            backgroundColor: "#ECAA20",
-            display: "inline-flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "60%",
-              height: "100%",
-              backgroundColor: "#EC4A3C",
-              display: "inline-flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                minWidth: "33%",
-                width: "33%",
-                height: "100%",
-                backgroundColor: "#52899A",
-                display: "inline-flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <p style={{ visibility: "hidden" }}>i</p>
-            </div>
-          </div>
-        </div> */}
-      </div>
+      ></div>
+      <input
+        className="slider"
+        type="range"
+        min="0"
+        max="100"
+        step={0.00001}
+        value={props.value}
+        style={{
+          zIndex: 99999,
+          position: "absolute",
+          bottom: 0,
+          backgroundColor: "rgba(255,255,255,0)",
+        }}
+      />
+      {/* <div
+        style={{
+          width: "5px",
+          borderRadius: "3px",
+          height: "100%",
+          backgroundColor: "red",
+          // backgroundRepeat: "repeat-y",
+          transform: `translateX(${props.value - 27}vw)`,
+          zIndex: 999999,
+          position: "absolute",
+          bottom: 0,
+        }}
+      ></div> */}
     </div>
   );
 };
