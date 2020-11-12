@@ -5,14 +5,7 @@ import Slider from "./Slider";
 import socket from "./Socket";
 
 const GuesserPlayArea = (props: GameProps) => {
-  const { goal, leftWord, rightWord } = props;
-  let [value, setValue] = useState(50);
-
-  useEffect(() => {
-    socket.on("valuechanged", (value: number) => {
-      setValue(value);
-    });
-  }, []);
+  const { goal, leftWord, rightWord, value } = props;
 
   const handleGuess = () => {
     socket.emit("guess", props.roomName, value);
@@ -30,9 +23,15 @@ const GuesserPlayArea = (props: GameProps) => {
       <p style={{ margin: 0 }}>
         It's your team's turn to <strong>GUESS</strong>
       </p>
-      <Slider roomName={props.roomName} role="guesser" value={value} />
+      <Slider
+        roomName={props.roomName}
+        role="guesser"
+        value={value}
+        steal={props.steal}
+      />
       <button
         style={{ backgroundColor: "#7effa9", color: "#000", width: "40%" }}
+        disabled={props.steal}
         onClick={handleGuess}
       >
         Guess

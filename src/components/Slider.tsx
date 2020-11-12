@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import "../styles/Slider.css";
 import target from "../assets/target.svg";
 import socket from "./Socket";
+import _ from "lodash";
 type SliderProps = {
   role: "stealer" | "guesser";
   roomName: string;
   value: number;
+  steal: boolean;
 };
 
 const Slider = (props: SliderProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (props.role === "stealer") return;
+    if (props.role === "stealer" || props.steal) return;
     if (props.role === "guesser") {
       socket.emit(
         "changevalue",
@@ -19,7 +21,12 @@ const Slider = (props: SliderProps) => {
         Number.parseFloat(e.target.value)
       );
     }
+    console.log("change");
   };
+
+  const [throttledCall] = useState(() =>
+    _.debounce((e) => handleChange(e), 10)
+  );
 
   return (
     <div
@@ -38,7 +45,7 @@ const Slider = (props: SliderProps) => {
         max="100"
         step={0.00001}
         value={props.value}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e)}
       />
     </div>
   );

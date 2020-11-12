@@ -5,15 +5,11 @@ import Slider from "./Slider";
 import socket from "./Socket";
 
 const StealerPlayArea = (props: GameProps) => {
-  const { goal, leftWord, rightWord } = props;
+  const { goal, leftWord, rightWord, value } = props;
 
-  let [value, setValue] = useState(50);
-
-  useEffect(() => {
-    socket.on("valuechanged", (value: number) => {
-      setValue(value);
-    });
-  }, []);
+  const handleSteal = (direction: "left" | "right") => {
+    socket.emit("steal", props.roomName, direction, value);
+  };
 
   return (
     <div
@@ -28,7 +24,12 @@ const StealerPlayArea = (props: GameProps) => {
       <p style={{ margin: 0 }}>
         It's your team's turn to <strong>STEAL</strong>
       </p>
-      <Slider value={value} roomName={props.roomName} role="stealer" />
+      <Slider
+        steal={props.steal}
+        value={value}
+        roomName={props.roomName}
+        role="stealer"
+      />
       <div
         style={{
           display: "flex",
@@ -43,6 +44,8 @@ const StealerPlayArea = (props: GameProps) => {
             width: "auto",
             marginRight: "5px",
           }}
+          disabled={!props.steal}
+          onClick={() => handleSteal("left")}
         >
           Left
         </button>
@@ -53,6 +56,8 @@ const StealerPlayArea = (props: GameProps) => {
             width: "auto",
             marginLeft: "5px",
           }}
+          disabled={!props.steal}
+          onClick={() => handleSteal("right")}
         >
           Right
         </button>

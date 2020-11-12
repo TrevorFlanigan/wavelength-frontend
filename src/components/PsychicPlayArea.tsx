@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from "react";
 import GameProps from "../types/GameProps";
 import PolarCards from "./PolarCards";
-import socket from "./Socket";
 import Target from "./Target";
 
 const PsychicPlayArea = (props: GameProps) => {
-  const { goal, leftWord, rightWord } = props;
-
-  let [value, setValue] = useState(50);
-  useEffect(() => {
-    socket.on("valuechanged", (value: number) => {
-      setValue(value);
-    });
-  }, []);
+  const { goal, leftWord, rightWord, value } = props;
 
   return (
     <div

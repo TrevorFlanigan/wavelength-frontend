@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import RoomData from "../types/RoomData";
 import socket from "./Socket";
-
+import bg from "../assets/wavelength.gif";
 type NotStartedProps = {
   roomName: string;
   name?: string;
@@ -11,7 +11,7 @@ type NotStartedProps = {
   handleTeamChange?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void;
-  start?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  start: (value: number) => void;
 };
 
 const Modals = {
@@ -26,20 +26,41 @@ const NotStarted = (props: NotStartedProps) => {
   const history = useHistory();
   const roomName = props.roomName;
   const data = props.data;
+  let [value, setValue] = useState(10);
 
   const renderNames = (names: string[]) => {
     return (
       <ul style={{ listStyleType: "none", padding: 0 }}>
         {names.map((name) => (
-          <li style={{ fontWeight: "bold" }}>{name}</li>
+          <li style={{ fontWeight: "bold", color: "white" }}>{name}</li>
         ))}
       </ul>
     );
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `url(${bg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+      }}
+    >
       {/* <button>Start the Game</button> */}
+      <h1
+        style={{
+          marginTop: 0,
+          paddingTop: 20,
+          textAlign: "center",
+          color: "#000",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        WAVELENGTH
+      </h1>
       <div style={{ display: "flex", flexDirection: "row", margin: "20px" }}>
         <div
           style={{
@@ -104,10 +125,28 @@ const NotStarted = (props: NotStartedProps) => {
           flex: "1 1 300px",
           alignItems: "center",
           justifyContent: "center",
+          flexDirection: "column",
         }}
       >
+        <input
+          name="maxscore"
+          type="number"
+          min="1"
+          max="40"
+          value={value}
+          onChange={(e) => setValue(e.target.valueAsNumber)}
+          style={{
+            margin: 20,
+            marginBottom: 5,
+          }}
+        />
+        <label htmlFor="name" style={{ color: "white", marginBottom: "10px" }}>
+          First Team to {Number.isNaN(value) ? 10 : value >= 40 ? 40 : value}{" "}
+          wins
+        </label>
+
         <button
-          onClick={props.start}
+          onClick={() => props.start(value)}
           style={{
             backgroundColor: "#7effa9",
           }}

@@ -2,7 +2,7 @@ import React, { CSSProperties, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import RoomData from "../types/RoomData";
 import toTitleCase from "../utils/toTitleCase";
-import PlayArea from "./PlayArea";
+import EndPlayArea from "./EndPlayArea";
 import PolarCards from "./PolarCards";
 import socket from "./Socket";
 import "../styles/Modals.css";
@@ -31,12 +31,11 @@ const Modals = {
   NONE: "",
 };
 
-const Room = (props: GameProps) => {
+const Room = (props: GameProps & { leftScore: number; rightScore: number }) => {
   const history = useHistory();
-  let [orangeScore, setOrangeScore] = useState(0);
-  let [blueScore, setBlueScore] = useState(0);
-  const roomName = props.roomName;
 
+  const roomName = props.roomName;
+  let { leftScore, rightScore } = props;
   const renderNames = (names: string[]) => {
     return (
       <ul style={{ listStyleType: "none", padding: 0 }}>
@@ -51,6 +50,7 @@ const Room = (props: GameProps) => {
   const guessing = props.currTeam === (props.leftTurn ? "left" : "right");
 
   const renderPlayArea = () => {
+    if (props.end) return <EndPlayArea {...props} />;
     if (props.isPsychic) return <PsychicPlayArea {...props} />;
     if (guessing) return <GuesserPlayArea {...props} />;
     else return <StealerPlayArea {...props} />;
@@ -126,10 +126,10 @@ const Room = (props: GameProps) => {
           }}
         >
           <h1 style={{ backgroundColor: "#FFA97E", ...scoreStyle }}>
-            {orangeScore}
+            {leftScore}
           </h1>
           <h1 style={{ backgroundColor: "#7ED6FF", ...scoreStyle }}>
-            {blueScore}
+            {rightScore}
           </h1>
         </div>
       </div>
